@@ -1,0 +1,22 @@
+<h1>QUIZ MAKER</h1>
+<div>
+  <form [formGroup]="generateForm">
+    <mat-form-field>
+      <mat-select placeholder="Select a category" formControlName="category">
+        <mat-option *ngFor="let category of categories$ | async" [value]="category.id">{{category.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Select difficulty</mat-label>
+      <mat-select formControlName="difficulty">
+        <mat-option *ngFor="let value of DifficultiesEnum | keyvalue" [value]="value.value">{{value.value}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="generateQuiz()">Create</button>
+  </form>
+</div>
+
+<div *ngIf="questions$">
+  <li *ngFor="let question of questions$ |async" [innerHTML]="question.question"></li>
+</div>
