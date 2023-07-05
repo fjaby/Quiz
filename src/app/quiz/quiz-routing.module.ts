@@ -1,17 +1,19 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {QUizComponent} from "./quiz.component";
+import {QuizComponent} from "./quiz.component";
 import {ResultComponent} from "./result/result.component";
 import {CoreModule} from "../core/core.module";
+import {resultAccessGuard} from "../core/guards/result-access.guard";
 
 const routes: Routes = [
   {
     path: '',
-    component: QUizComponent
+    component: QuizComponent
   },
   {
     path: 'result',
-    component: ResultComponent
+    component: ResultComponent,
+    canActivate: [resultAccessGuard]
   },
 ];
 

@@ -1,12 +1,11 @@
 import {Injectable} from '@angular/core';
 import {DifficultiesEnum} from "../../shared/model/difficulties-enum";
-import {Category} from "../../shared/model/category";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {Question} from "../../shared/model/question";
 import {map, Observable} from "rxjs";
 import {ApiQuestionResult} from "../../shared/model/api-question-result";
-import {toQuestion} from "../../shared/model/questionDto";
+import {QuestionDto, toQuestion} from "../../shared/model/questionDto";
 
 @Injectable({
   providedIn: 'root'
@@ -26,15 +25,15 @@ export class QuestionsService {
 
   generateQuestions(difficulty: DifficultiesEnum, categoryId: number): Observable<Question[]> {
     let params: HttpParams = new HttpParams()
-      .append(this.AMOUNT_QUERYPARAM,this.AMOUNT)
+      .append(this.AMOUNT_QUERYPARAM, this.AMOUNT)
       .append(this.CATEGORY_QUERYPARAM, categoryId)
-      .append(this.DIFFICULTY_QUERYPARAM, difficulty.valueOf())
-      .append(this.TYPE_QUERYPARAM,this.TYPE)
-    return this.http.get<ApiQuestionResult>(environment.apiUrl+this.API_ENDPOINT, {params})
+      .append(this.DIFFICULTY_QUERYPARAM, difficulty)
+      .append(this.TYPE_QUERYPARAM, this.TYPE)
+    return this.http.get<ApiQuestionResult>(environment.apiUrl + this.API_ENDPOINT, {params})
       .pipe(
         map(resAPI => resAPI.results
-          .map((question,index)=>
-            (toQuestion(question,index))))
+          .map((question: QuestionDto, index: number) =>
+            (toQuestion(question, index))))
       )
   }
 }

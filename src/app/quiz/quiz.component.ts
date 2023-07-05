@@ -16,9 +16,9 @@ import {QuizActions} from "../shared/store/quiz/quiz.actions";
   templateUrl: './quiz.component.html',
   styleUrls: ['./quiz.component.scss']
 })
-export class QUizComponent implements OnInit {
+export class QuizComponent implements OnInit {
 
-  questions$ = this.store.select(questionsSelector)
+  questions$:Observable<ReadonlyArray<Question>> = this.store.select(questionsSelector)
   generateForm!: FormGroup;
   categories$!: Observable<Category[]>;
   respondToSend: boolean= false;
@@ -36,17 +36,19 @@ export class QUizComponent implements OnInit {
     this.categories$ = this.categoriesService.getCategories();
     this.store.dispatch(QuizActions.resetQuiz());
 
-    this.questions$.subscribe(value => {
-      this.respondToSend = value.length>0 &&  value.every(q => q?.selected_answer)
+    this.questions$.subscribe((value:ReadonlyArray<Question>) => {
+      this.respondToSend = value.length>0 &&  value.every((q:Question) => q?.selected_answer)
     })
   }
 
   protected readonly DifficultiesEnum = DifficultiesEnum;
 
   generateQuiz() {
-    let selectedCategory: number = this.generateForm.value.category;
-    let selectedDifficulty: DifficultiesEnum = this.generateForm.value.difficulty;
-    this.store.dispatch(fromActions.loadQuestion({caterogyId: selectedCategory, difficulty: selectedDifficulty}));
+    if(this.generateForm.valid) {
+      let selectedCategory: number = this.generateForm.value.category;
+      let selectedDifficulty: DifficultiesEnum = this.generateForm.value.difficulty;
+      this.store.dispatch(fromActions.loadQuestion({caterogyId: selectedCategory, difficulty: selectedDifficulty}));
+    }
   }
 
   respondToQuestion(question: Question) {
