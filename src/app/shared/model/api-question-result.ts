@@ -1,6 +1,6 @@
-import {Question} from "./question";
+import {QuestionDto} from "./questionDto";
 
 export interface ApiQuestionResult {
   response_code: number,
-  results: Question[]
+  results: QuestionDto[]
 }

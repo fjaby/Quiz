@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import {HttpClientModule} from "@angular/common/http";
 import {CategoriesService} from "./services/categories.service";
 import {QuestionsService} from "./services/questions.service";
+import {EffectsModule} from "@ngrx/effects";
+import {QuizEffects} from "../shared/store/quiz/quiz.effects";
 
 
 
@@ -10,7 +12,8 @@ import {QuestionsService} from "./services/questions.service";
   declarations: [],
   imports: [
     CommonModule,
-    HttpClientModule
+    HttpClientModule,
+    EffectsModule.forFeature([QuizEffects])
   ],
   providers:[
     CategoriesService,

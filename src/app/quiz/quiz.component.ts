@@ -5,7 +5,11 @@ import {CategoriesService} from "../core/services/categories.service";
 import {Observable} from "rxjs";
 import {Category} from "../shared/model/category";
 import {QuestionsService} from "../core/services/questions.service";
+import {Store} from "@ngrx/store";
+import {questionsSelector} from "../shared/store/quiz/quiz.selector";
+import * as fromActions from "../shared/store/quiz/quiz.actions";
 import {Question} from "../shared/model/question";
+import {QuizActions} from "../shared/store/quiz/quiz.actions";
 
 @Component({
   selector: 'app-quiz',
@@ -13,14 +17,15 @@ import {Question} from "../shared/model/question";
   styleUrls: ['./quiz.component.scss']
 })
 export class QUizComponent implements OnInit {
+
+  questions$ = this.store.select(questionsSelector)
   generateForm!: FormGroup;
   categories$!: Observable<Category[]>;
-  questions$!: Observable<Question[]>;
-
+  respondToSend: boolean= false;
 
   constructor(private fb: FormBuilder,
-              private categoriesService: CategoriesService,
-              private questionsService :QuestionsService) {
+              private store: Store,
+              private categoriesService: CategoriesService) {
   }
 
   ngOnInit(): void {
@@ -29,13 +34,22 @@ export class QUizComponent implements OnInit {
       difficulty: ['', Validators.required],
     })
     this.categories$ = this.categoriesService.getCategories();
+    this.store.dispatch(QuizActions.resetQuiz());
 
+    this.questions$.subscribe(value => {
+      this.respondToSend = value.length>0 &&  value.every(q => q?.selected_answer)
+    })
   }
 
   protected readonly DifficultiesEnum = DifficultiesEnum;
 
   generateQuiz() {
-    console.log(this.generateForm.value)
-    this.questions$ = this.questionsService.generateQuestions(this.generateForm.value.difficulty,this.generateForm.value.category)
+    let selectedCategory: number = this.generateForm.value.category;
+    let selectedDifficulty: DifficultiesEnum = this.generateForm.value.difficulty;
+    this.store.dispatch(fromActions.loadQuestion({caterogyId: selectedCategory, difficulty: selectedDifficulty}));
+  }
+
+  respondToQuestion(question: Question) {
+    this.store.dispatch(QuizActions.respondQuiz({question: question}))
   }
 }

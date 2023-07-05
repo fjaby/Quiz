@@ -1,0 +1,9 @@
+.answer {
+  &__correct {
+    background-color: lightgreen;
+  }
+
+  &__incorrect {
+    background-color: lightcoral;
+  }
+}

@@ -5,6 +5,7 @@ import {ResultComponent} from './result/result.component';
 import {MaterialModule} from "../shared/material/material.module";
 import {QuizRoutingModule} from "./quiz-routing.module";
 import {ReactiveFormsModule} from "@angular/forms";
+import {SharedModule} from "../shared/shared.module";
 
 
 @NgModule({
@@ -15,8 +16,8 @@ import {ReactiveFormsModule} from "@angular/forms";
   imports: [
     QuizRoutingModule,
     CommonModule,
-    MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ]
 })
 export class QuizModule {

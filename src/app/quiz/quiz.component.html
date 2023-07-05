@@ -18,5 +18,7 @@
 </div>
 
 <div *ngIf="questions$">
-  <li *ngFor="let question of questions$ |async" [innerHTML]="question.question"></li>
+ <app-question (selectedResponseEvent)="respondToQuestion($event)" *ngFor="let question of questions$ | async" [question]="question"></app-question>
 </div>
+
+<button *ngIf="respondToSend" routerLink="result"> Répondre</button>

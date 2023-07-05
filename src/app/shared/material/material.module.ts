@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {MatButtonModule} from "@angular/material/button";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatDividerModule} from "@angular/material/divider";
@@ -7,13 +7,12 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatSelectModule} from "@angular/material/select";
 import {MatCardModule} from "@angular/material/card";
-import {MatOption, MatOptionModule} from "@angular/material/core";
-
+import {MatOptionModule} from "@angular/material/core";
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
 
 
 @NgModule({
-  declarations: [
-  ],
+  declarations: [],
   imports: [
     MatButtonModule,
     MatDividerModule,
@@ -23,11 +22,13 @@ import {MatOption, MatOptionModule} from "@angular/material/core";
     MatSelectModule,
     MatFormFieldModule,
     CommonModule,
+    MatButtonToggleModule,
     MatOptionModule
   ],
-  exports:[
+  exports: [
     MatButtonModule,
     MatDividerModule,
+    MatButtonToggleModule,
     MatCardModule,
     MatChipsModule,
     MatTooltipModule,
@@ -37,4 +38,5 @@ import {MatOption, MatOptionModule} from "@angular/material/core";
     MatOptionModule
   ]
 })
-export class MaterialModule { }
+export class MaterialModule {
+}

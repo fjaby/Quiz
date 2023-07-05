@@ -6,6 +6,7 @@ import {environment} from "../../../environments/environment";
 import {Question} from "../../shared/model/question";
 import {map, Observable} from "rxjs";
 import {ApiQuestionResult} from "../../shared/model/api-question-result";
+import {toQuestion} from "../../shared/model/questionDto";
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,10 @@ export class QuestionsService {
       .append(this.DIFFICULTY_QUERYPARAM, difficulty.valueOf())
       .append(this.TYPE_QUERYPARAM,this.TYPE)
     return this.http.get<ApiQuestionResult>(environment.apiUrl+this.API_ENDPOINT, {params})
-      .pipe(map(value => value.results))
+      .pipe(
+        map(resAPI => resAPI.results
+          .map((question,index)=>
+            (toQuestion(question,index))))
+      )
   }
 }
