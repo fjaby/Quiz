@@ -7,6 +7,18 @@
 
     &__text{
       margin:auto;
+      &__bad{
+        background-color: red;
+        color:white;
+      }
+      &__medium{
+        background-color: yellow;
+      }
+      &__good{
+        background-color: green;
+        color:white;
+      }
+
     }
   }
 }

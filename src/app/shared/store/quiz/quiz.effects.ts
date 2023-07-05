@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
-import {QuestionsService} from "../../../core/services/questions.service";
+import {QuestionsService} from "../../../core/services/questions/questions.service";
 import * as fromActions from "./quiz.actions";
 import {debounceTime, map, switchMap} from "rxjs";
 import {Question} from "../../model/question";

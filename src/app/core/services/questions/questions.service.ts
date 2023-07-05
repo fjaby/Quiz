@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
-import {DifficultiesEnum} from "../../shared/model/difficulties-enum";
+import {DifficultiesEnum} from "../../../shared/model/difficulties-enum";
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {environment} from "../../../environments/environment";
-import {Question} from "../../shared/model/question";
+import {environment} from "../../../../environments/environment";
+import {Question} from "../../../shared/model/question";
 import {map, Observable} from "rxjs";
-import {ApiQuestionResult} from "../../shared/model/api-question-result";
-import {QuestionDto, toQuestion} from "../../shared/model/questionDto";
+import {ApiQuestionResult} from "../../../shared/model/api-question-result";
+import {QuestionDto} from "./questionDto";
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +33,17 @@ export class QuestionsService {
       .pipe(
         map(resAPI => resAPI.results
           .map((question: QuestionDto, index: number) =>
-            (toQuestion(question, index))))
+            (this.toQuestion(question, index))))
       )
+  }
+
+
+  private toQuestion(questionDto: QuestionDto, id: number): Question {
+    return {
+      ...questionDto,
+      id: id,
+      answers: [...questionDto.incorrect_answers, questionDto.correct_answer]
+        .sort((a, b) => Math.random() < .5 ? -1 : 1),
+    }
   }
 }

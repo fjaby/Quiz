@@ -25,4 +25,12 @@ export class ResultComponent implements OnInit {
   }
 
 
+  resultClass() {
+    if(this.goods<2){
+      return {'results__score__text__bad':true}
+    }if(this.goods>3){
+      return {'results__score__text__good':true}
+    }
+    return {'results__score__text__medium':true}
+  }
 }

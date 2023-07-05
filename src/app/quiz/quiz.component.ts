@@ -4,7 +4,7 @@ import {DifficultiesEnum} from "../shared/model/difficulties-enum";
 import {CategoriesService} from "../core/services/categories.service";
 import {Observable} from "rxjs";
 import {Category} from "../shared/model/category";
-import {QuestionsService} from "../core/services/questions.service";
+import {QuestionsService} from "../core/services/questions/questions.service";
 import {Store} from "@ngrx/store";
 import {questionsSelector} from "../shared/store/quiz/quiz.selector";
 import * as fromActions from "../shared/store/quiz/quiz.actions";

@@ -2,7 +2,7 @@
 <div *ngIf="questions$">
   <app-question [displayResult]="true" *ngFor="let question of questions$ | async" [question]="question"></app-question>
 </div>
-<div class="results__score">
+<div class="results__score" [ngClass]="resultClass()">
   <p class="results__score__text"> Your scored {{goods}} out of {{totals}}</p>
 </div>
 
